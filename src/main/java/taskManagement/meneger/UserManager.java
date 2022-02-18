@@ -1,6 +1,7 @@
 package taskManagement.meneger;
 
 import taskManagement.DB.DBConnectionProvider;
+import taskManagement.enums.UserType;
 import taskManagement.model.User;
 
 import java.sql.*;
@@ -44,18 +45,19 @@ public class UserManager {
     }
     public User getUserByEmail(String email) {
         String sql = "SELECT * FROM user WHERE email=?";
+        User user = new User();
         PreparedStatement preparedStatement;
         try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return getUserFromResultSet(resultSet);
+                user =getUserFromResultSet(resultSet);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return null;
+        return user;
     }
     public boolean registerUser(User user) {
         String sql = "INSERT INTO user (`name`,surname,email,password) VALUES (?,?,?,?)";
@@ -84,7 +86,7 @@ public class UserManager {
 
     public List<User> getAllUsers() {
         List<User> userList = new ArrayList<>();
-        String sql = "SELECT * FROM user";
+        String sql = "SELECT * FROM user where user_type ='USER'";
         PreparedStatement preparedStatement;
         try {
             preparedStatement = connection.prepareStatement(sql);
@@ -98,19 +100,21 @@ public class UserManager {
         return userList;
     }
 
+
+
     private User getUserFromResultSet(ResultSet resultSet) {
         User user = new User();
         try {
-            user.setId(resultSet.getInt("id"));
-            user.setName(resultSet.getString("name"));
-            user.setSurname(resultSet.getString("surname"));
-            user.setEmail(resultSet.getString("email"));
-            user.setPassword(resultSet.getString("password"));
-            return user;
+            user.setId(resultSet.getInt(1));
+            user.setName(resultSet.getString(2));
+            user.setSurname(resultSet.getString(3));
+            user.setEmail(resultSet.getString(4));
+            user.setPassword(resultSet.getString(5));
+            user.setUserType(UserType.valueOf(resultSet.getString(6)));
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return user;
 
     }
 }
