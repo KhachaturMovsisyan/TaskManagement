@@ -83,7 +83,7 @@ input[type=submit]:hover {
         <option value="NEW">New</option>
         <option value="IN_PROGRESS">In progress</option>
         <option value="FINISHED">Finished</option>     </select><br>
-        deadline: <input style="margin-top: auto" type="date" name="deadline"> <br>
+        deadline: <input style="margin-top: auto" type="date" name="date"> <br>
         <input style="margin-top: auto" type="submit" value="Submit"> <br>
 
     </form>

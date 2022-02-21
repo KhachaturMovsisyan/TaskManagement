@@ -47,40 +47,45 @@ input[type=submit]:hover {
 <body>
 <%
     User user = (User) session.getAttribute("user");
-    List<Task> taskList =  (List<Task>) session.getAttribute("tasks");
+    List<Task> tasks = (List<Task>)session.getAttribute("tasks");
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 %>
 <h2>Welcome</h2>
 <h2><%=user.getName()%></h2>
 <h2><%=user.getSurname()%></h2>
 
-<table style="background-color: lavender"; >
+
+<table style="background-color: white" >
     <thead>
     <tr style="border-style: solid">
-        <th><h3>Title</h3></th>
-        <th><h3>Description</h3></th>
-        <th><h3>Status</h3></th>
-        <th><h3>Deadline</h3></th>
-        <th><h3>Change Status</h3></th>
+        <th style="border-style: solid; border-color: #0062cc"><h3>Title</h3></th>
+        <th style="border-style: solid; border-color: #0062cc"><h3>Description</h3></th>
+        <th style="border-style: solid; border-color: #0062cc"><h3>Status</h3></th>
+        <th style="border-style: solid; border-color: #0062cc"><h3>Deadline</h3></th>
+        <th style="border-style: solid; border-color: #0062cc"><h3>Change Status</h3></th>
     </tr>
     </thead>
     <tbody>
-    <% for (Task task : taskList) { %>
+    <% for (Task task : tasks) { %>
     <tr style="border-style: solid">
-        <td><h3><%=task.getTitle()%></h3>
+        <td style="border-style: solid; border-color: #0062cc"><h4><%=task.getTitle()%></h4>
         </td>
-        <td><h3><%=task.getDescription()%></h3>
+        <td style="border-style: solid; border-color: #0062cc"><h4><%=task.getDescription()%></h4>
         </td>
-        <td><h3><%=task.getStatus()%></h3>
+        <td style="border-style: solid; border-color: #0062cc"><h4>
+            <option value=<%=task.getId()%>> <%=task.getStatus()%>
+            </option> </h4>
         </td>
-        <td><h3><%=sdf.format(task.getDeadline())%></h3>
+        <td style="border-style: solid; border-color: #0062cc"><h4><%=sdf.format(task.getDeadline())%></h4>
         </td>
-        <td><select style="margin-top: auto" name="status">
+        <form action="/changeStatus"><td style="border-style: solid; border-color: #0062cc"><select style="margin-top: auto" name="status">
             <option value="NEW">New</option>
             <option value="IN_PROGRESS">In progress</option>
             <option value="FINISHED">Finished</option>     </select><br>
             <input style="margin-top: auto" type="submit" value="Change"> <br>
-        </td>
+        </td></form>
+
+
 
     </tr>
     <% } %>
@@ -89,6 +94,8 @@ input[type=submit]:hover {
     </table>
 
 
+    <form style="width: 200px; height: 200px" action="/logout" method="get">
+        <input type="submit" value="logout"></form>
 
 
 

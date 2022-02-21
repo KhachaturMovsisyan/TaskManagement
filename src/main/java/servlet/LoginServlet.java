@@ -22,18 +22,18 @@ public class LoginServlet extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter("email");
         String password = req.getParameter("pass");
-        User user = userManager.getUserByEmailAndPassword(email,password);
+        User user = userManager.getUserByEmailAndPassword(email, password);
         if (user == null) {
-            req.getRequestDispatcher("/WEB-INF/wrongdata.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/wrongData.jsp").forward(req, resp);
         } else {
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
             session.setAttribute("tasks", taskManager.getTaskByUser(user));
-            if (user.getUserType() == UserType.ADMIN) {
-                resp.sendRedirect("/adminHome");
+            if (user.getUserType() == UserType.MANAGER) {
+                resp.sendRedirect("/managerHome");
             } else {
                 resp.sendRedirect("/userMenu");
             }
         }
-}
+    }
 }

@@ -92,7 +92,7 @@ public class TaskManager {
 
 
     public List<Task> getTaskByUserAndStatus(User user, TaskStatus status) {
-        List<Task> toDoList = new ArrayList<>();
+        List<Task> taskList = new ArrayList<>();
         String sql = "SELECT * FROM todo where user_id =? AND status =?";
         PreparedStatement preparedStatement;
         try {
@@ -101,23 +101,22 @@ public class TaskManager {
             preparedStatement.setString(2, status.name());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                toDoList.add(getTaskFromResultSet(resultSet));
+                taskList.add(getTaskFromResultSet(resultSet));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return toDoList;
+        return taskList;
     }
 
-    public boolean update(long id, TaskStatus status) {
-        String sql = "UPDATE todo SET status=? WHERE id=?";
+    public boolean update(long taskId, TaskStatus status) {
+        String sql = "UPDATE task SET status=? WHERE id=?";
         PreparedStatement statement;
         try {
             statement = connection.prepareStatement(sql);
-            statement.setLong(2, id);
             statement.setString(1, status.name());
+            statement.setLong(2, taskId);
             statement.executeUpdate(sql);
-            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -125,7 +124,7 @@ public class TaskManager {
     }
 
     public boolean delete(long id) {
-        String sql = "delete * FROM todo WHERE id=?";
+        String sql = "delete * FROM tasks WHERE id=?";
         PreparedStatement statement;
         try {
             statement = connection.prepareStatement(sql);
@@ -147,6 +146,7 @@ public class TaskManager {
             task.setDescription((resultSet.getString(3)));
             task.setStatus(TaskStatus.valueOf(resultSet.getString(4)));
             task.setUser(userManager.getById(resultSet.getLong(5)));
+            task.setDeadline(resultSet.getDate(6));
             return task;
         } catch (SQLException e) {
             e.printStackTrace();

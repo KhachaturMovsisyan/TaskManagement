@@ -4,7 +4,7 @@ import taskManagement.enums.TaskStatus;
 import taskManagement.meneger.TaskManager;
 import taskManagement.meneger.UserManager;
 import taskManagement.model.Task;
-import taskManagement.model.User;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,13 +26,14 @@ public class addTaskServlet extends HttpServlet {
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("title");
         String description = req.getParameter("description");
         TaskStatus status = TaskStatus.valueOf(req.getParameter("status"));
         try {
-            Date deadline = sdf.parse(req.getParameter("deadline"));
+            Date deadline =  sdf.parse(req.getParameter("deadline"));
             int user_id = Integer.parseInt(req.getParameter("user"));
+
             Task task = new Task();
             task.setTitle(name);
             task.setDescription(description);
@@ -43,7 +44,7 @@ public class addTaskServlet extends HttpServlet {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        System.out.println(taskManager.getAllTask());
+
 
 
         req.setAttribute("allUsers", userManager.getAllUsers());

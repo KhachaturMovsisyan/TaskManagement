@@ -11,6 +11,7 @@ import java.util.List;
 public class UserManager {
     private Connection connection = DBConnectionProvider.getInstance().getConnection();
     Statement statement;
+
     public User getById(long id) {
         String sql = "SELECT * FROM user WHERE id=" + id;
 
@@ -111,6 +112,7 @@ public class UserManager {
             user.setEmail(resultSet.getString(4));
             user.setPassword(resultSet.getString(5));
             user.setUserType(UserType.valueOf(resultSet.getString(6)));
+           // user.setUserType(UserType.valueOf(resultSet.getString(6)));
         } catch (SQLException e) {
             e.printStackTrace();
         }

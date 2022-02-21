@@ -50,23 +50,32 @@ input[type=submit]:hover {
 
 <div style="display: flex; justify-content: space-around">
 
-        <form  action="/addUser" method="post">
-            <h1>Add User:</h1><br>
-            name: <input style="margin-top: auto" type="text" name="name"> <br>
-            surname: <input style="margin-top: auto" type="text" name="surname"> <br>
-            email: <input style="margin-top: auto" type="text" name="email"> <br>
-            password: <input style="margin-top: auto" type="text" name="password"><br>
-            <input style="margin-top: auto" type="submit" value="Add User">
+    <form action="/addUser" method="post">
+        <h1>Add User:</h1><br>
+        name: <input style="margin-top: auto" type="text" name="name"> <br>
+        surname: <input style="margin-top: auto" type="text" name="surname"> <br>
+        email: <input style="margin-top: auto" type="text" name="email"> <br>
+        password: <input style="margin-top: auto" type="text" name="password"><br>
+        <input style="margin-top: auto" type="submit" value="Add User">
 
-            <div style="margin-top: 80px">
-            <form  action="/all_users" method="get">
-                <input type="submit" value="see all users"></form>
+    </form>
+
+    <div style="margin-top: 80px">
+        <form action="/seeAllUser" method="get">
+            <input type="submit" value="see all users"></form>
 
 
-            <form  action="/all_tasks" method="get">
-                <input type="submit" value="see all tasks"></form>
-            </div>
-        </form>
+        <form action="/seeAllTasks" method="get">
+            <input type="submit" value="see all tasks"></form>
+
+
+        <div style="margin-top: 80px">
+            <form action="/logout" method="post">
+                <input type="submit" value="logout"></form>
+        </div>
+    </div>
+
+
 
 
     <form action="/addTask" method="post">
@@ -75,20 +84,20 @@ input[type=submit]:hover {
         description: <input style="margin-top: auto" type="text" name="description"> <br>
         user: <select style="margin-top: auto" name="user"><%
         for (User user : allUsers) {%>
-        <option value=<%=user.getId()%>> <%=user.getName() %>
+        <option value=<%=user.getId()%>><%=user.getName() %>
         </option>
         <% }%></select><br>
         status: <select style="margin-top: auto" name="status">
         <option value="NEW">New</option>
         <option value="IN_PROGRESS">In progress</option>
-        <option value="FINISHED">Finished</option>     </select><br>
+        <option value="FINISHED">Finished</option>
+    </select><br>
         deadline: <input style="margin-top: auto" type="date" name="deadline"> <br>
         <input style="margin-top: auto" type="submit" value="Submit"> <br>
 
     </form>
 
 </div>
-
 
 
 </body>
